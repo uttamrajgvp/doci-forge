@@ -1,0 +1,136 @@
+.wrapper {
+  position: relative;
+  display: block;
+  user-select: none;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* The rendered PDF bitmap */
+.pageImage {
+  display: block;
+  pointer-events: none;
+  image-rendering: high-quality;
+}
+
+/* Transparent overlay container — sits exactly on top of the image */
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* overlay itself is transparent */
+}
+
+/* Individual text zone */
+.textZone {
+  position: absolute;
+  pointer-events: all;
+  cursor: text;
+  border-radius: 2px;
+  transition: background 0.12s, outline 0.12s;
+  display: flex;
+  align-items: flex-start;
+  overflow: visible;
+}
+
+.textZone:hover {
+  background: rgba(59, 130, 246, 0.13);
+  outline: 1.5px solid rgba(59, 130, 246, 0.5);
+}
+
+/* A modified text zone covers the old text and shows the new text */
+.textZone.edited {
+  background: #ffffff; /* Cover the original PDF text */
+  outline: 1.5px dashed rgba(245, 158, 11, 0.6);
+  z-index: 2;
+}
+
+/* Add a subtle amber tint inside the white background */
+.textZone.edited::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 158, 11, 0.08);
+  pointer-events: none;
+}
+
+/* Label shown in non-editing state (fully transparent, just for hit area) */
+.textLabel {
+  opacity: 0; /* invisible by default — the PDF image shows the text */
+  white-space: nowrap;
+  pointer-events: none;
+  font-family: inherit;
+  line-height: 1.1;
+}
+
+.textZone.edited .textLabel {
+  opacity: 1; /* show the new text when edited */
+}
+
+/* The inline <input> that appears when editing */
+.inlineInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: max-content;
+  min-width: 100%;
+  padding: 0 2px;
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid #3b82f6;
+  background: rgba(239, 246, 255, 0.97);
+  font-family: inherit;
+  line-height: 1;
+  outline: none;
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.25);
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* Formatting toolbar that floats above the input */
+.formatToolbar {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 4px;
+  display: flex;
+  gap: 2px;
+  background: #1e293b;
+  padding: 4px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 11;
+}
+
+.formatBtn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: serif;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+
+.formatBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f1f5f9;
+}
+
+.formatBtn.activeFormat {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.formatBtn[title="Bold"] {
+  font-weight: bold;
+}
+
+.formatBtn[title="Italic"] {
+  font-style: italic;
+}

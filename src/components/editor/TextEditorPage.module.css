@@ -1,0 +1,293 @@
+/* TextEditorPage layout */
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--bg-app, #0f172a);
+  overflow: hidden;
+}
+
+/* ── Top Bar ─────────────────────────────────────────────────────────────── */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  height: 52px;
+  background: var(--bg-surface, #1e293b);
+  border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.07));
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.topLeft, .topRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+.topRight { justify-content: flex-end; }
+.topCenter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.1));
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.backBtn:hover { background: rgba(255,255,255,0.05); color: #e2e8f0; }
+
+.docTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary, #94a3b8);
+  font-weight: 500;
+}
+.docTitle span {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.1));
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-primary, #f1f5f9);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.navBtn:hover:not(:disabled) { background: rgba(255,255,255,0.08); }
+.navBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.pageLabel {
+  font-size: 13px;
+  color: var(--text-primary, #f1f5f9);
+  font-weight: 500;
+  min-width: 80px;
+  text-align: center;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #94a3b8);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+.iconBtn:hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+
+.zoomLabel {
+  font-size: 12px;
+  color: var(--text-secondary, #94a3b8);
+  min-width: 36px;
+  text-align: center;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-subtle, rgba(255,255,255,0.1));
+  margin: 0 4px;
+}
+
+.resetBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 6px;
+  background: rgba(245, 158, 11, 0.08);
+  color: #f59e0b;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.resetBtn:hover { background: rgba(245, 158, 11, 0.15); }
+
+.editBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.exportBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+.exportBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+.exportBtn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Main canvas area ───────────────────────────────────────────────────── */
+.canvasArea {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  gap: 16px;
+}
+
+.canvasScroller {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.canvasInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  color: #93c5fd;
+  font-size: 12.5px;
+  max-width: 700px;
+  width: 100%;
+}
+
+.hint kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  border: 1px solid rgba(147, 197, 253, 0.4);
+  border-radius: 3px;
+  font-size: 11px;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* Loading / error center messages */
+.centerMsg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 80px;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 14px;
+}
+.errorIcon { color: #ef4444; }
+
+/* ── Edit list sidebar ──────────────────────────────────────────────────── */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: fixed;
+  right: 0;
+  top: 52px;
+  bottom: 0;
+  background: var(--bg-surface, #1e293b);
+  border-left: 1px solid var(--border-subtle, rgba(255,255,255,0.07));
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 12px;
+  overflow-y: auto;
+  z-index: 5;
+}
+
+.sidebarTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted, #64748b);
+}
+
+.editList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.editItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.editOld {
+  font-size: 11px;
+  color: var(--text-muted, #64748b);
+  text-decoration: line-through;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.editArrow {
+  font-size: 10px;
+  color: #f59e0b;
+}
+.editNew {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary, #f1f5f9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,114 @@
+.navigator {
+  width: 240px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-default);
+  display: flex;
+  flex-direction: column;
+  transition: width var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.collapsed {
+  width: 48px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.titleWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-primary);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.collapseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  background: transparent;
+  transition: all var(--transition-fast);
+}
+
+.collapseBtn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.pageList {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.pageItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.pageItem:hover {
+  opacity: 1;
+}
+
+.pageItem.active {
+  opacity: 1;
+}
+
+.thumbnail {
+  width: 100%;
+  aspect-ratio: 1 / 1.414; /* A4 proportion approx */
+  background: var(--bg-inset);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active .thumbnail {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.thumbPlaceholder {
+  font-size: var(--text-2xl);
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+}
+
+.pageLabel {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.active .pageLabel {
+  color: var(--text-primary);
+  font-weight: var(--weight-medium);
+}
