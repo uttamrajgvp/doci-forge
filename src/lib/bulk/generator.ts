@@ -23,7 +23,7 @@ export async function generateBulkPdfs({
 
   for (let i = 0; i < dataRows.length; i++) {
     const row = dataRows[i];
-    const editsByPage = new Map<number, import('./pdfModifier').TextEdit[]>();
+    const editsByPage = new Map<number, import('../pdf/pdfModifier').TextEdit[]>();
 
     // Map fields for the current row
     for (const mapping of mappings) {

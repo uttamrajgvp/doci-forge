@@ -97,10 +97,10 @@ export function VisualFieldMapper() {
             
             // Adjust coordinates based on the renderer's scale (1.5)
             const scale = 1.5;
-            const x = mapping.originalItem.x * scale;
-            const y = mapping.originalItem.y * scale;
-            const width = mapping.originalItem.width * scale;
-            const height = mapping.originalItem.height * scale;
+            const x = mapping.originalItem.canvasX * scale;
+            const y = mapping.originalItem.canvasY * scale;
+            const width = mapping.originalItem.canvasWidth * scale;
+            const height = mapping.originalItem.canvasHeight * scale;
             
             return (
               <div

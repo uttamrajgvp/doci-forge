@@ -148,7 +148,7 @@ export function TextEditorPage({ pdfBytes, fileName }: Props) {
       }
 
       const bytes = await modifier.applyTextEdits(textEditsByPage);
-      const blob  = new Blob([bytes], { type: 'application/pdf' });
+      const blob  = new Blob([bytes as unknown as BlobPart], { type: 'application/pdf' });
       const url   = URL.createObjectURL(blob);
       const a     = document.createElement('a');
       a.href      = url;

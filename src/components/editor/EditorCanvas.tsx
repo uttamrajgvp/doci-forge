@@ -387,8 +387,8 @@ export function EditorCanvas() {
         
         // Set canvas dimensions to match the PDF page size at scale 2.0
         canvas.setDimensions({
-          width: pageInfo.width,
-          height: pageInfo.height,
+          width: pageInfo.canvasWidth,
+          height: pageInfo.canvasHeight,
         });
         
         canvas.backgroundImage = bgImage;

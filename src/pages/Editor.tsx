@@ -12,7 +12,7 @@ import styles from './Editor.module.css';
 export function Editor() {
   const location = useLocation();
   const navigate  = useNavigate();
-  const { pdfBytes, pdfFile, setPdfFile, setPdfBytes, reset } = useEditorStore();
+  const { pdfBytes, pdfFile, setPdfFile, setPdfBytes } = useEditorStore();
   const { addProject } = useProjectStore();
 
   // Load project if project ID is in URL

@@ -60,9 +60,9 @@ function mapToStandardFont(
     return StandardFonts.Courier;
   }
   if (isSerif) {
-    if (bold && italic) return StandardFonts.TimesBoldItalic;
-    if (bold)           return StandardFonts.TimesBold;
-    if (italic)         return StandardFonts.TimesItalic;
+    if (bold && italic) return StandardFonts.TimesRomanBoldItalic;
+    if (bold)           return StandardFonts.TimesRomanBold;
+    if (italic)         return StandardFonts.TimesRomanItalic;
     return StandardFonts.TimesRoman;
   }
   if (bold && italic) return StandardFonts.HelveticaBoldOblique;
@@ -81,11 +81,9 @@ function hexToRgb(hex: string) {
 export class PDFModifier {
   private originalBytes: Uint8Array | null = null;
   private fontCache: Map<StandardFonts, any> = new Map();
-  private pdfDoc: PDFDocument | null = null;
 
   async loadDocument(bytes: Uint8Array) {
     this.originalBytes = new Uint8Array(bytes);
-    this.pdfDoc = await PDFDocument.load(this.originalBytes);
   }
 
   private async fresh(): Promise<PDFDocument> {
