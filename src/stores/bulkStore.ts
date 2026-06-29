@@ -7,6 +7,7 @@ export interface FieldMapping {
   csvHeader: string | null;
   defaultValue: string;
   pageNumber: number;
+  isCustom?: boolean;
 }
 
 export interface BulkState {

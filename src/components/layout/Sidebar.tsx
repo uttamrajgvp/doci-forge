@@ -31,7 +31,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         <div className={styles.logoMark}>
           <Anvil size={22} />
         </div>
-        {!collapsed && <span className={styles.brandText}>PDF Forge</span>}
+        {!collapsed && <span className={styles.brandText}>DociForge</span>}
       </div>
 
       <nav className={styles.nav}>

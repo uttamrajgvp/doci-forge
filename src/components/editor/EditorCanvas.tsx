@@ -66,13 +66,21 @@ export function EditorCanvas() {
         .filter((obj: any) => !obj.excludeFromExport)
         .map((obj) => obj.toObject(['id', 'data']));
       
+      // Truncate any future history if we branched off
       historyRef.current = historyRef.current.slice(0, historyIndexRef.current + 1);
       historyRef.current.push(state);
       historyIndexRef.current = historyRef.current.length - 1;
       
       const { setHistoryState } = useEditorStore.getState();
-      setHistoryState(historyIndexRef.current > 0, false);
+      setHistoryState(
+        historyIndexRef.current > 0,
+        false  // no redo available after a new action
+      );
     };
+
+    // Push an initial blank state so index=0 is always a valid baseline
+    historyRef.current = [[]];
+    historyIndexRef.current = 0;
 
     canvas.on('object:added', saveState);
     canvas.on('object:modified', saveState);
@@ -185,15 +193,18 @@ export function EditorCanvas() {
           data: { originalItem: clickedItem }
         } as any);
       } else {
-        // Just create a normal new Textbox
-        textbox = new fabric.Textbox('Type text...', {
+        // Create a new standalone Textbox at the clicked position
+        textbox = new fabric.Textbox('Type here...', {
           left: pointer.x,
           top: pointer.y,
-          width: 150,
+          width: 200,
           fontSize: 16,
           fill: '#000000',
-          fontFamily: 'Open Sans',
-          id: `text-${Date.now()}`
+          fontFamily: 'Helvetica',
+          backgroundColor: 'rgba(255,255,200,0.6)',  // pale yellow hint so it's visible
+          splitByGrapheme: false,
+          editable: true,
+          id: `text-${Date.now()}`,
         } as any);
       }
 
@@ -308,22 +319,29 @@ export function EditorCanvas() {
 
     const loadHistoryState = async () => {
       isSuppressingHistoryRef.current = true;
-      const objs = canvas.getObjects().slice();
-      objs.forEach(o => {
+
+      // Remove all non-persistent objects (covers, textboxes etc.)
+      canvas.getObjects().slice().forEach(o => {
         if (!(o as any).excludeFromExport) {
           canvas.remove(o);
         }
       });
 
       const state = historyRef.current[historyIndexRef.current] || [];
-      const objects = await fabric.util.enlivenObjects(state);
-      objects.forEach((obj) => {
-        canvas.add(obj as any);
-      });
-      
+      if (state.length > 0) {
+        const objects = await fabric.util.enlivenObjects(state);
+        objects.forEach((obj) => {
+          canvas.add(obj as any);
+        });
+      }
+
+      canvas.discardActiveObject();
       canvas.requestRenderAll();
       const { setHistoryState } = useEditorStore.getState();
-      setHistoryState(historyIndexRef.current > 0, historyIndexRef.current < historyRef.current.length - 1);
+      setHistoryState(
+        historyIndexRef.current > 0,
+        historyIndexRef.current < historyRef.current.length - 1
+      );
       isSuppressingHistoryRef.current = false;
     };
 
